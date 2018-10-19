@@ -30,7 +30,7 @@ docker run -v some-packages:/packages \
     -e GPG_NAME=aptly-admin \
     -e GPG_EMAIL=test@test.com \
     -e GPG_PASSPHRASE=secret \
-    -p 8080:8080 aptly
+    -p 8080:8080 lu1as/aptly
 ```
 
 Example with manual repository creation:
@@ -39,7 +39,7 @@ docker run -it -v aptly-data:/aptly \
     -v /dev/urandom:/dev/random \ # required with boot2docker for gpg key generation
     -e REPO_BOOTSTRAP=false \
     -e GPG_BOOTSTRAP=false \
-    -p 8080:8080 aptly bash
+    -p 8080:8080 lu1as/aptly bash
 ```
 
 checkout https://www.aptly.info/doc/overview/ for following steps
