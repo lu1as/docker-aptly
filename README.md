@@ -38,6 +38,6 @@ docker run -it -v aptly-data:/aptly \
     -e REPO_BOOTSTRAP=false \
     -e GPG_BOOTSTRAP=false \
     -p 8080:8080 aptly bash
-
-# checkout https://www.aptly.info/doc/overview/ for following steps
 ```
+
+checkout https://www.aptly.info/doc/overview/ for following steps
