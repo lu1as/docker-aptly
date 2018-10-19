@@ -2,7 +2,7 @@
 
 docker image for [aptly](https://www.aptly.info/) debian repository management
 
-Docker hub: [hub.docker.com/r/lu1as/aptly](hub.docker.com/r/lu1as/aptly)
+Docker hub: [hub.docker.com/r/lu1as/aptly](https://hub.docker.com/r/lu1as/aptly)
 
 ## How to start
 
