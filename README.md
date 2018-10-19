@@ -2,6 +2,8 @@
 
 docker image for [aptly](https://www.aptly.info/) debian repository management
 
+Docker hub: [hub.docker.com/r/lu1as/aptly](hub.docker.com/r/lu1as/aptly)
+
 ## How to start
 
 On start the entrypoint script will create a gpg key for package signing. You can skip this by setting `GPG_BOOTSTRAP` to `false`, e.g. if you want to use an existing gpg key.
