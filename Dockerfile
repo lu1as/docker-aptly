@@ -7,7 +7,7 @@ LABEL repository="github.com/lu1as/docker-aptly"
 LABEL version=${APTLY_VERSION}
 
 RUN apt-get update \
-    && apt-get install -y gnupg1 gpgv1 \
+    && apt-get install -y gnupg1 gpgv1 cron \
     && echo "deb http://repo.aptly.info/ squeeze main" > /etc/apt/sources.list.d/aptly.list \
     && apt-key adv --fetch-keys https://www.aptly.info/pubkey.txt \
     && apt-get update \
