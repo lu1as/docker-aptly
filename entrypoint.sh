@@ -50,6 +50,7 @@ fi
 
 if [[ "$REPO_AUTO_IMPORT" == "true" ]]; then
     echo -e "\nstart cronjob for importing new packages"
+    echo -e "*/30 * * * * aptly /import.sh '$REPO_NAME' >> /packages/import.log 2>&1\n" | sudo tee /etc/cron.d/aptly-${REPO_NAME}-cron
     sudo cron
 fi
 

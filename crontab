@@ -1,1 +1,0 @@
-*/30 * * * * aptly /import.sh >> /packages/import.log 2>&1
