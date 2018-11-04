@@ -3,6 +3,7 @@
 GPG_BOOTSTRAP=${GPG_BOOTSTRAP:-true}
 REPO_BOOTSTRAP=${REPO_BOOTSTRAP:-true}
 REPO_AUTO_IMPORT=${REPO_AUTO_IMPORT:-true}
+REPO_NAME=${REPO_NAME:-myrepo}
 
 function gpg_bootstrap() {
     GPG_KEY_SIZE=${GPG_KEY_SIZE:-4096}
@@ -31,12 +32,11 @@ EOF
 }
 
 function repo_bootstrap() {
-    REPO_NAME=${REPO_NAME:-myrepo}
     REPO_DISTRIBUTION=${REPO_DISTRIBUTION:-debian}
 
     echo -e "\ncreate repository $REPO_NAME for distribution $REPO_DISTRIBUTION"
     aptly repo create "$REPO_NAME"
-    /import.sh
+    source /import.sh "$REPO_NAME"
     aptly -batch -passphrase="$GPG_PASSPHRASE" -distribution="$REPO_DISTRIBUTION" publish repo "$REPO_NAME"
 }
 
