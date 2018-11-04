@@ -16,6 +16,8 @@ RUN apt-get update \
     && useradd -m -d /aptly -s /bin/bash aptly
 
 COPY entrypoint.sh /entrypoint.sh
+COPY import.sh /import.sh
+COPY crontab /etc/cron.d/aptly-cron
 
 USER aptly
 WORKDIR /aptly
