@@ -17,10 +17,11 @@ RUN apt-get update \
     && echo "aptly ALL=NOPASSWD: ALL" >> /etc/sudoers
 
 COPY entrypoint.sh /entrypoint.sh
-COPY import.sh /import.sh
+COPY add_incoming.sh /add_incoming.sh
 
 USER aptly
 WORKDIR /aptly
-VOLUME [ "/aptly" ]
+VOLUME /aptly
+VOLUME /incoming
 
 CMD [ "/entrypoint.sh" ]

@@ -4,12 +4,13 @@ GPG_BOOTSTRAP=${GPG_BOOTSTRAP:-true}
 REPO_BOOTSTRAP=${REPO_BOOTSTRAP:-true}
 REPO_AUTO_IMPORT=${REPO_AUTO_IMPORT:-true}
 REPO_NAME=${REPO_NAME:-myrepo}
+REPO_DISTRIBUTION=${REPO_DISTRIBUTION:-debian}
 
 function gpg_bootstrap() {
     GPG_KEY_SIZE=${GPG_KEY_SIZE:-4096}
 
     if [ -z "$GPG_NAME" ] || [ -z "$GPG_EMAIL" ] || [ -z "$GPG_PASSPHRASE" ]; then
-        echo "GPG_NAME, GPG_EMAIL and GPG_PASSPHRASE environment varibles are required"
+        echo "GPG_NAME, GPG_EMAIL and GPG_PASSPHRASE environment varibles are required for gpg bootstrap"
         exit 1
     fi
 
@@ -32,11 +33,9 @@ EOF
 }
 
 function repo_bootstrap() {
-    REPO_DISTRIBUTION=${REPO_DISTRIBUTION:-debian}
-
     echo -e "\ncreate repository $REPO_NAME for distribution $REPO_DISTRIBUTION"
     aptly repo create "$REPO_NAME"
-    source /import.sh "$REPO_NAME"
+    aptly repo -remove-files add "$REPO_NAME" /incoming
     aptly -batch -passphrase="$GPG_PASSPHRASE" -distribution="$REPO_DISTRIBUTION" publish repo "$REPO_NAME"
 }
 
@@ -49,8 +48,10 @@ if [ ! -d "/aptly/.aptly" ] && [[ "$REPO_BOOTSTRAP" == "true" ]]; then
 fi
 
 if [[ "$REPO_AUTO_IMPORT" == "true" ]]; then
-    echo -e "\nstart cronjob for importing new packages"
-    echo -e "*/30 * * * * aptly /import.sh '$REPO_NAME' >> /packages/import.log 2>&1\n" | sudo tee /etc/cron.d/aptly-${REPO_NAME}-cron
+    REPO_AUTO_IMPORT_INTERVAL=${REPO_AUTO_IMPORT_INTERVAL:-*/30 * * * *}
+    sudo bash -c "echo -e \"$REPO_AUTO_IMPORT_INTERVAL aptly /add_incoming.sh '$REPO_NAME' '$REPO_DISTRIBUTION' '$GPG_PASSPHRASE' > /incoming/incoming.log 2>&1\n\" > /etc/cron.d/aptly-${REPO_NAME}-cron"
+    
+    echo -e "\nstart cronjob for adding incoming packages"
     sudo cron
 fi
 

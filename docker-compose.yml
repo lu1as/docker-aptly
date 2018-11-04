@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  aptly:
+    image: lu1as/aptly
+    environment:
+      GPG_NAME: aptly-admin
+      GPG_EMAIL: test@test.com
+      GPG_PASSPHRASE: secret
+      REPO_AUTO_IMPORT_INTERVAL: "* * * * *"
+    volumes:
+      - $PWD/aptly:/aptly
+      - $PWD/incoming:/incoming
+    ports:
+      - 8080:8080
