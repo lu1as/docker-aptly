@@ -50,7 +50,7 @@ fi
 
 if [[ "$REPO_AUTO_IMPORT" == "true" ]]; then
     echo -e "\nstart cronjob for importing new packages"
-    cron
+    sudo cron
 fi
 
 echo -e "\nserve on port 8080"
