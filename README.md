@@ -42,4 +42,4 @@ docker run -it -v aptly-data:/aptly \
     -p 8080:8080 lu1as/aptly bash
 ```
 
-checkout https://www.aptly.info/doc/overview/ for following steps
+checkout [www.aptly.info/doc](https://www.aptly.info/doc/overview/) for following steps

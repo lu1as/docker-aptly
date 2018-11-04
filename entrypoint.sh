@@ -34,9 +34,9 @@ function repo_bootstrap() {
     REPO_DISTRIBUTION=${REPO_DISTRIBUTION:-debian}
 
     echo -e "\ncreate repository $REPO_NAME for distribution $REPO_DISTRIBUTION"
-    aptly repo create $REPO_NAME
-    aptly repo add $REPO_NAME /packages
-    aptly -passphrase="$GPG_PASSPHRASE" -distribution="$REPO_DISTRIBUTION" publish repo $REPO_NAME
+    aptly repo create "$REPO_NAME"
+    aptly repo add "$REPO_NAME" /packages
+    aptly -batch -passphrase="$GPG_PASSPHRASE" -distribution="$REPO_DISTRIBUTION" publish repo "$REPO_NAME"
 }
 
 if [ ! -f "/aptly/aptly_public_key.asc" ] && [[ "$GPG_BOOTSTRAP" == "true" ]]; then
