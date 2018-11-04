@@ -37,6 +37,7 @@ function repo_bootstrap() {
     aptly repo create "$REPO_NAME"
     aptly repo -remove-files add "$REPO_NAME" /incoming
     aptly -batch -passphrase="$GPG_PASSPHRASE" -distribution="$REPO_DISTRIBUTION" publish repo "$REPO_NAME"
+    cp /aptly/aptly_public_key.asc /aptly/.aptly/public/public.key
 }
 
 if [ ! -f "/aptly/aptly_public_key.asc" ] && [[ "$GPG_BOOTSTRAP" == "true" ]]; then
@@ -52,7 +53,7 @@ if [[ "$REPO_AUTO_IMPORT" == "true" ]]; then
     sudo bash -c "echo -e \"$REPO_AUTO_IMPORT_INTERVAL aptly /add_incoming.sh '$REPO_NAME' '$REPO_DISTRIBUTION' '$GPG_PASSPHRASE' > /incoming/incoming.log 2>&1\n\" > /etc/cron.d/aptly-${REPO_NAME}-cron"
     
     echo -e "\nstart cronjob for adding incoming packages"
-    sudo cron
+    sudo service cron start
 fi
 
 echo -e "\nserve on port 8080"
