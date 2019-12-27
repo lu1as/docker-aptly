@@ -1,6 +1,6 @@
 FROM debian:stable
 
-ARG APTLY_VERSION=1.3.0
+ARG APTLY_VERSION=1.4.0
 
 LABEL maintainer="lukas.steiner@steinheilig.de"
 LABEL repository="github.com/lu1as/docker-aptly"
